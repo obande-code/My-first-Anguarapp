@@ -1,0 +1,55 @@
+<button  class="btn btn-dark mb-2" (click) = "showUserForm = !showUserForm">Add User</button>
+<div class="card card-body" *ngIf="showUserForm">
+    <h3>Add User</h3>
+    <form (submit)="onSubmit($event)">
+        <div class="form-group">
+            <label>First Name</label>
+            <input type="text" class="form-control"  placeholder="Enter First Name" [(ngModel)]="user.firstName" name="firstName">
+          </div>
+        
+        <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" class="form-control"  placeholder="Enter Last Name" [(ngModel)]="user.lastName" name="lastName">
+        </div>
+
+        <div class="form-group">
+        <label>Age</label>
+        <input type="number" class="form-control" [(ngModel)]="user.age"  name="age">
+        </div>
+
+        <div class="form-group">
+            <label>Street</label>
+            <input type="text" class="form-control" [(ngModel)]="user.address.street"  name="street">
+        </div>
+
+        <div class="form-group">
+            <label>City</label>
+            <input type="text" class="form-control"  [(ngModel)]="user.address.city"  name="city">
+        </div>
+
+        <div class="form-group">
+            <label>State</label>
+            <input type="text" class="form-control" [(ngModel)]="user.address.state"   name="state">
+        </div>
+    </form>
+</div>
+<h1>Users</h1> 
+<button (click)="addUser()" class="btn btn-light btn-block mb-3" [disabled] =  "user.firstName == '' || user.lastName == ''">  Add New User</button>
+<ul *ngFor="let user of models" class="list-unstyled" >
+    <li class="card card-body">
+        <div class="row">
+            <div class="col-sm-4">
+                <img class="fluid" style="width: 300; height: 300; border-radius: 50%;" [src]="user.image" alt="">
+            </div>
+            <div class="col-sm-8">
+                <h3> Name : {{user.firstName}} {{user.lastName}} <small><button (click) = "toggleHide(user)" class="btn btn-dark btn-sm"><i [ngClass]="user.hide ? 'fa fa-plus-circle' : 'fa fa-minus-circle'"></i></button></small></h3>
+                <ul class="list-group" *ngIf="!user.hide && user.address && user.age">
+                    <li  class="list-group-item">Age : {{user.age}} </li>
+                    <li class="list-group-item"> Address : {{user.address.street}} {{user.address.city}} {{user.address.state}}</li>
+                    <li  class="list-group-item">Joined : {{user.registered | date}} </li>
+                </ul>
+            </div>
+        </div>
+    </li>
+</ul>
+
